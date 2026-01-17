@@ -41,7 +41,7 @@ sitemap: true
   {% if post.tags %}
     <div class="post-tags-list">
       {% for tag in post.tags %}
-        <a href="/tags/{{ tag | downcase }}" class="tag-small">{{ tag }}</a>
+        <a href="{{ site.baseurl }}/tags/{{ tag | downcase }}/" class="tag-small">{{ tag }}</a>
       {% endfor %}
     </div>
   {% endif %}
