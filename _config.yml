@@ -2,9 +2,26 @@ title: Hellal Web
 description: مدونة تقنية عربية عن البرمجة، الويب، الأنظمة، والأمن
 url: https://hellaleweb.github.io
 
+# Language and Locale Settings
+lang: ar
+locale: ar_SA
+dir: rtl
+
 theme: minima
 markdown: kramdown
+
+# Kramdown Configuration for Arabic
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+
+# Minima Theme Customization
+minima:
+  skin: auto
+  social_links:
+    github: KerrasDev

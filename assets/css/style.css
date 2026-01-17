@@ -1,0 +1,114 @@
+--- --- @import "{{ site.theme }}";
+
+/* RTL Support for Arabic */
+html {
+    direction: rtl;
+    text-align: right;
+}
+
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Navigation RTL */
+.site-header {
+    direction: rtl;
+}
+
+.site-nav {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Code blocks - LTR for code */
+code,
+pre {
+    direction: ltr;
+    text-align: left;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+pre {
+    overflow-x: auto;
+}
+
+/* Tables */
+table {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Lists */
+ul,
+ol {
+    padding-right: 2rem;
+}
+
+/* Links styling */
+a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Post meta information */
+.post-meta {
+    direction: rtl;
+    text-align: right;
+    color: #828282;
+    font-size: 14px;
+}
+
+/* Post content */
+.post-content {
+    direction: rtl;
+    text-align: right;
+    line-height: 1.8;
+}
+
+/* Headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Blockquotes */
+blockquote {
+    border-right: 4px solid #e8e8e8;
+    border-left: none;
+    padding-right: 1rem;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+/* Footer */
+.site-footer {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+
+    html,
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .site-nav {
+        direction: rtl;
+    }
+}
