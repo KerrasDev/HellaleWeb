@@ -7,7 +7,7 @@ lang: ar
 locale: ar_SA
 dir: rtl
 
-theme: minima
+theme: jekyll-theme-minimal
 markdown: kramdown
 
 # Kramdown Configuration for Arabic
@@ -19,9 +19,35 @@ kramdown:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-archives
 
-# Minima Theme Customization
-minima:
-  skin: auto
-  social_links:
-    github: KerrasDev
+# Archives configuration
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomies
+    tag: archive-taxonomies
+  permalinks:
+    category: '/categories/:name/'
+    tag: '/tags/:name/'
+
+# Pagination
+paginate: 10
+paginate_path: '/page/:num/'
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: '/:year/:month/:day/:slug/'
+
+# Theme customization
+minimal:
+  logo: true
+  description: "مدونة تقنية عربية متخصصة في البرمجة والويب"
+  github:
+    is_project_page: false
+    is_user_page: true
+    username: KerrasDev
