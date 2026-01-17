@@ -11,7 +11,7 @@ dir: rtl
 # Author and Social
 author:
   name: KerrasDev
-  email: contact@hellaleweb.github.io
+  email: contact@hellaleweb.com
   twitter: KerrasDev
   github: KerrasDev
 
@@ -19,7 +19,7 @@ author:
 social:
   name: Hellal Web
   links:
-    - https://github.com/KerrasDev/hellaleweb.github.io
+    - https://github.com/KerrasDev/HellaleWeb
     - https://twitter.com/KerrasDev
 
 # Google Analytics (optional)
@@ -44,7 +44,7 @@ plugins:
 seo:
   name: Hellal Web
   description: مدونة تقنية عربية متخصصة في البرمجة والويب والأمن والذكاء الاصطناعي
-  url: https://hellaleweb.github.io
+  url: https://kerrasdev.github.io/HellaleWeb
 
 # Archives configuration
 jekyll-archives:

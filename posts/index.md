@@ -26,7 +26,7 @@ sitemap: true
         <span class="post-categories">
           📂 
           {% for category in post.categories %}
-            <a href="/categories/{{ category | downcase }}" class="category-link">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
+            <a href="{{ site.baseurl }}/categories/{{ category | downcase }}/" class="category-link">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
           {% endfor %}
         </span>
       {% endif %}

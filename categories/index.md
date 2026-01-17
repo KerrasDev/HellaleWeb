@@ -16,7 +16,7 @@ sitemap: true
 {% for category in site.categories %}
   <div class="category-card">
     <h3>
-      <a href="/categories/{{ category[0] | downcase }}/">
+      <a href="{{ site.baseurl }}/categories/{{ category[0] | downcase }}/">
         {{ category[0] }}
       </a>
     </h3>

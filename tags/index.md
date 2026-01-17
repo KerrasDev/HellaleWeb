@@ -15,7 +15,7 @@ sitemap: true
 <div class="tags-grid">
 {% for tag in site.tags %}
   <div class="tag-card">
-    <a href="/tags/{{ tag[0] | downcase }}/">
+    <a href="{{ site.baseurl }}/tags/{{ tag[0] | downcase }}/">
       {{ tag[0] }}
       <span class="tag-count">{{ tag[1].size }}</span>
     </a>
