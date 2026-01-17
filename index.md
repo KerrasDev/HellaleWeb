@@ -68,6 +68,5 @@ sitemap: true
 <div class="explore-links">
   <a href="{{ '/posts/' | relative_url }}" class="explore-btn">📖 جميع المقالات</a>
   <a href="{{ '/categories/' | relative_url }}" class="explore-btn">📂 استعرض حسب الفئة</a>
-  <a href="{{ '/tags/' | relative_url }}" class="explore-btn">🏷️ استعرض حسب الوسم</a>
   <a href="{{ '/about/' | relative_url }}" class="explore-btn">👤 عن المدونة</a>
 </div>
