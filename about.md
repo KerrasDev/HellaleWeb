@@ -76,11 +76,11 @@ permalink: /about/
 
 ## 🔗 روابط مهمة
 
-- 🏠 [الصفحة الرئيسية](/)
-- 📝 [جميع المقالات](/posts/)
-- 🏷️ [البحث حسب الوسوم](/tags/)
-- 📂 [البحث حسب الفئات](/categories/)
-- 🐙 [GitHub Repository](https://github.com/KerrasDev/hellaleweb.github.io)
+- 🏠 [الصفحة الرئيسية]({{ '/' | relative_url }})
+- 📏 [جميع المقالات]({{ '/posts/' | relative_url }})
+- 🏷️ [البحث حسب الوسوم]({{ '/tags/' | relative_url }})
+- 📂 [البحث حسب الفئات]({{ '/categories/' | relative_url }})
+- 🐙 [GitHub Repository](https://github.com/KerrasDev/HellaleWeb)
 
 ---
 
