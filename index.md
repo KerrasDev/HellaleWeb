@@ -52,7 +52,7 @@ sitemap: true
   {% if post.tags %}
   <div class="post-tags-preview">
     {% for tag in post.tags %}
-      <a href="/tags/{{ tag | downcase }}" class="tag">{{ tag }}</a>
+      <a href="{{ site.baseurl }}/tags/{{ tag | downcase }}/" class="tag">{{ tag }}</a>
     {% endfor %}
   </div>
   {% endif %}
@@ -66,8 +66,8 @@ sitemap: true
 ## 🔍 استكشف المدونة
 
 <div class="explore-links">
-  <a href="/posts/" class="explore-btn">📖 جميع المقالات</a>
-  <a href="/categories/" class="explore-btn">📂 استعرض حسب الفئة</a>
-  <a href="/tags/" class="explore-btn">🏷️ استعرض حسب الوسم</a>
-  <a href="/about/" class="explore-btn">👤 عن المدونة</a>
+  <a href="{{ '/posts/' | relative_url }}" class="explore-btn">📖 جميع المقالات</a>
+  <a href="{{ '/categories/' | relative_url }}" class="explore-btn">📂 استعرض حسب الفئة</a>
+  <a href="{{ '/tags/' | relative_url }}" class="explore-btn">🏷️ استعرض حسب الوسم</a>
+  <a href="{{ '/about/' | relative_url }}" class="explore-btn">👤 عن المدونة</a>
 </div>
