@@ -17,7 +17,7 @@ author:
 
 # SEO and Social Meta
 social:
-  name: Hellal Web
+  name: هلال ويب
   links:
     - https://github.com/KerrasDev/HellaleWeb
     - https://twitter.com/KerrasDev
@@ -42,7 +42,7 @@ plugins:
 
 # jekyll-seo-tag configuration
 seo:
-  name: Hellal Web
+  name: هلال ويب
   description: مدونة تقنية عربية متخصصة في البرمجة والويب والأمن والذكاء الاصطناعي
   url: https://kerrasdev.github.io/HellaleWeb
 
