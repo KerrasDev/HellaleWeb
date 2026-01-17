@@ -1,0 +1,50 @@
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>{{ site.title }}</h3>
+            <p>{{ site.description }}</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>روابط سريعة</h4>
+            <ul class="footer-links">
+                <li><a href="/">الرئيسية</a></li>
+                <li><a href="/posts/">جميع المقالات</a></li>
+                <li><a href="/about/">عن المدونة</a></li>
+                <li><a href="/feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>تابعنا</h4>
+            <ul class="social-links">
+                {% if site.author.github %}
+                <li>
+                    <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer"
+                        title="GitHub">
+                        🐙 GitHub
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.author.twitter %}
+                <li>
+                    <a href="https://twitter.com/{{ site.author.twitter }}" target="_blank" rel="noopener noreferrer"
+                        title="Twitter">
+                        𝕏 Twitter
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="footer-copyright">
+            © {{ site.time | date: "%Y" }} {{ site.title }}. جميع الحقوق محفوظة.
+        </p>
+        <p class="footer-credit">
+            مصنوع بـ ❤️ باستخدام <a href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> و
+            <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+        </p>
+    </div>
+</footer>
