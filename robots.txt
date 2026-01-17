@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /*.json
+Crawl-delay: 1
+
+Sitemap: https://hellaleweb.github.io/sitemap.xml

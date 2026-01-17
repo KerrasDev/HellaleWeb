@@ -581,3 +581,53 @@ main {
     background-color: transparent;
     color: var(--primary-color);
 }
+
+/* ===== Related Posts Section ===== */
+.related-posts {
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: 6px;
+    border-right: 4px solid var(--primary-color);
+    margin-top: 3rem;
+    direction: rtl;
+    text-align: right;
+}
+
+.related-posts h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.related-posts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.related-posts li {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.related-posts li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.related-post-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    direction: rtl;
+    text-align: right;
+    display: block;
+}
+
+.related-post-link:hover {
+    color: var(--accent-color);
+    padding-right: 0.5rem;
+}

@@ -1,11 +1,29 @@
 title: Hellal Web
-description: مدونة تقنية عربية عن البرمجة، الويب، الأنظمة، والأمن
+description: مدونة تقنية عربية عن البرمجة، الويب، الأنظمة، والأمن والذكاء الاصطناعي
 url: https://hellaleweb.github.io
+baseurl: ""
 
 # Language and Locale Settings
 lang: ar
 locale: ar_SA
 dir: rtl
+
+# Author and Social
+author:
+  name: KerrasDev
+  email: contact@hellaleweb.github.io
+  twitter: KerrasDev
+  github: KerrasDev
+
+# SEO and Social Meta
+social:
+  name: Hellal Web
+  links:
+    - https://github.com/KerrasDev/hellaleweb.github.io
+    - https://twitter.com/KerrasDev
+
+# Google Analytics (optional)
+google_analytics: 
 
 theme: jekyll-theme-minimal
 markdown: kramdown
@@ -20,6 +38,13 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-archives
+  - jekyll-sitemap
+
+# jekyll-seo-tag configuration
+seo:
+  name: Hellal Web
+  description: مدونة تقنية عربية متخصصة في البرمجة والويب والأمن والذكاء الاصطناعي
+  url: https://hellaleweb.github.io
 
 # Archives configuration
 jekyll-archives:
@@ -46,7 +71,7 @@ collections:
 # Theme customization
 minimal:
   logo: true
-  description: "مدونة تقنية عربية متخصصة في البرمجة والويب"
+  description: "مدونة تقنية عربية متخصصة في البرمجة والويب والأمن والذكاء الاصطناعي"
   github:
     is_project_page: false
     is_user_page: true
