@@ -40,7 +40,7 @@ layout: default
     {% endif %}
 
     <!-- Schema Markup for Blog Post -->
-    <meta itemprop="image" content="{{ site.url }}/assets/images/og-image.png">
+    <meta itemprop="image" content="{{ '/assets/images/og-image.png' | absolute_url }}">
     <meta itemprop="description" content="{{ page.excerpt | strip_html | normalize_whitespace | truncatewords: 160 }}">
 </article>
 
