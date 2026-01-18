@@ -1,6 +1,6 @@
 /**
- * HellaleWeb Scripts - Enhanced View Counter Logic
- * Centralized JavaScript for the blog with improved CountAPI integration
+ * HellaleWeb Scripts - View Counter Logic using Jekyll Data Files
+ * Centralized JavaScript for the blog with Jekyll data files integration
  */
 
 // Configuration
@@ -366,3 +366,36 @@ setInterval(() => {
         }
     }
 }, CONFIG.minRequestInterval * 5); // Clean up every 5 intervals
+
+/**
+ * Jekyll Data Files Integration Functions
+ * These functions would be used to interact with Jekyll data files if we wanted to use them
+ */
+
+// Function to update local view counts (would be used if we had a backend to save data)
+window.updateLocalViewCount = function(postId, count) {
+    console.log(`Local view count update for ${postId}: ${count}`);
+    // In a real implementation with Jekyll data files, we would send this data to a backend
+    // that could update the _data/views.yml file, but since Jekyll is static,
+    // we rely on external services like CountAPI
+};
+
+// Function to get view counts from local storage as backup
+window.getLocalViewCount = function(postId) {
+    try {
+        const stored = localStorage.getItem(`view_count_${postId}`);
+        return stored ? parseInt(stored, 10) : null;
+    } catch (e) {
+        console.warn('Could not access local storage:', e);
+        return null;
+    }
+};
+
+// Function to set view counts in local storage as backup
+window.setLocalViewCount = function(postId, count) {
+    try {
+        localStorage.setItem(`view_count_${postId}`, count.toString());
+    } catch (e) {
+        console.warn('Could not update local storage:', e);
+    }
+};

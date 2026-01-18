@@ -41,6 +41,16 @@ sitemap: true
         {% endfor %}
       </span>
       {% endif %}
+      <!-- View counter using data files -->
+      <span class="post-views-list" data-post-url="{{ post.url }}">
+        👁️ 
+        <span class="view-count">
+          {% assign post_id = post.url | replace: '/', '-' | replace: '.html', '' | replace: '--', '-' | prepend: 'posts' %}
+          {% assign view_count = site.data.views[post_id] %}
+          {% if view_count %}{{ view_count }}{% else %}--{% endif %}
+        </span> 
+        مشاهدة
+      </span>
     </div>
   </div>
   

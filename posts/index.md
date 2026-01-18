@@ -26,12 +26,19 @@ sitemap: true
         <span class="post-categories">
           📂 
           {% for category in post.categories %}
-            <a href="{{ site.baseurl }}/categories/{{ category | downcase }}/" class="category-link">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
-          {% endfor %}
+            <a href="{{ site.baseurl }}/categories/{{ category | downcase }}/" class="category-link">{{ category }}</a>{% unless forloop.last %}, {% endfor %}
         </span>
       {% endif %}
-      <!-- View counter placeholder -->
-      <span class="post-views-list" data-post-url="{{ post.url }}">👁️ <span class="view-count">--</span> مشاهدة</span>
+      <!-- View counter using data files -->
+      <span class="post-views-list" data-post-url="{{ post.url }}">
+        👁️ 
+        <span class="view-count">
+          {% assign post_id = post.url | replace: '/', '-' | replace: '.html', '' | replace: '--', '-' | prepend: 'posts' %}
+          {% assign view_count = site.data.views[post_id] %}
+          {% if view_count %}{{ view_count }}{% else %}--{% endif %}
+        </span> 
+        مشاهدة
+      </span>
     </div>
   </div>
   
