@@ -51,31 +51,3 @@ sitemap: true
   <hr class="post-divider">
 </article>
 {% endfor %}
-
-<!-- View Counter Script for Post List -->
-<script>
-  (function() {
-    const viewCountElements = document.querySelectorAll('.post-views-list');
-    const namespace = 'hellaleweb';
-    
-    viewCountElements.forEach(element => {
-      const postUrl = element.getAttribute('data-post-url');
-      const postPath = postUrl.replace(/\//g, '-').replace(/^-|-$/g, '');
-      
-      // Use 'get' instead of 'hit' to not increment on list pages
-      fetch(`https://api.countapi.xyz/get/${namespace}/${postPath}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          element.querySelector('.view-count').textContent = (data.value || 0);
-        })
-        .catch(() => {
-          element.querySelector('.view-count').textContent = '0';
-        });
-    });
-  })();
-</script>

@@ -76,31 +76,3 @@ layout: default
             {% endfor %}
     </ul>
 </aside>
-
-<!-- View Counter Script -->
-<script>
-  (function() {
-    // Create a unique ID for this post based on its path
-    const postPath = window.location.pathname.replace(/\//g, '-').replace(/^-|-$/g, '');
-    const namespace = 'hellaleweb';
-    const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${postPath}`;
-    
-    // Fetch and increment view count
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Update the view count display
-        document.getElementById('view-count').textContent = data.value || 0;
-      })
-      .catch(error => {
-        console.error('Error fetching view count:', error);
-        // Show 0 if there's an error
-        document.getElementById('view-count').textContent = '0';
-      });
-  })();
-</script>
