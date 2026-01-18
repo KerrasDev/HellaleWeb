@@ -94,7 +94,7 @@ function delay(ms) {
 }
 
 /**
- * Fetch view count from CountAPI with retry logic
+ * Fetch view count from CountAPI with retry logic and better debugging
  * @param {string} postId - The post identifier
  * @param {boolean} increment - Whether to increment the counter
  * @param {number} retryCount - Current retry attempt
@@ -110,14 +110,24 @@ async function fetchViewCount(postId, increment = false, retryCount = 0) {
     const endpoint = increment ? 'hit' : 'get';
     const url = `${CONFIG.apiBase}/${endpoint}/${CONFIG.namespace}/${postId}`;
     
+    console.log(`Fetching view count for ${postId}, endpoint: ${endpoint}, URL: ${url}`);
+    
     try {
         const response = await fetch(url);
+        console.log(`Response status: ${response.status} for ${postId}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
+        console.log(`Received data for ${postId}:`, data);
+        
+        if (typeof data.value !== 'number') {
+            console.warn(`Invalid data format for ${postId}`, data);
+            return 0;
+        }
+        
         return data.value || 0;
     } catch (error) {
         console.error(`Error fetching view count for ${postId}:`, error);
@@ -140,8 +150,11 @@ async function fetchViewCount(postId, increment = false, retryCount = 0) {
 async function initializePostViewCounter() {
     const viewCountElement = document.getElementById('view-count');
     if (!viewCountElement) {
+        console.log('No view-count element found on this page');
         return; // Not on a post page
     }
+    
+    console.log('Found view-count element:', viewCountElement);
     
     const postId = getPostId(window.location.pathname);
     const alreadyViewed = wasViewedInSession(postId);
@@ -180,7 +193,9 @@ async function initializeListViewCounters() {
     
     let viewCountElements = [];
     selectors.forEach(selector => {
-        viewCountElements.push(...document.querySelectorAll(selector));
+        const found = document.querySelectorAll(selector);
+        console.log(`Found ${found.length} elements with selector: ${selector}`);
+        viewCountElements.push(...found);
     });
     
     if (viewCountElements.length === 0) {
@@ -188,10 +203,12 @@ async function initializeListViewCounters() {
         return;
     }
     
-    console.log(`Found ${viewCountElements.length} list view counter(s)`);
+    console.log(`Found ${viewCountElements.length} total view counter(s)`);
     
     // Process each view counter
     for (const element of viewCountElements) {
+        console.log('Processing element:', element);
+        
         // Look for post URL in various attributes
         let postUrl = element.getAttribute('data-post-url') || 
                      element.getAttribute('data-url') ||
@@ -211,11 +228,15 @@ async function initializeListViewCounters() {
             continue;
         }
         
+        console.log('Found post URL:', postUrl);
+        
         const postId = getPostId(postUrl);
         const viewCountSpan = element.querySelector('.view-count') || element;
         
+        console.log('Updating element:', viewCountSpan, 'with postId:', postId);
+        
         // Show loading
-        if (viewCountSpan.textContent === '0' || viewCountSpan.textContent === '...') {
+        if (viewCountSpan.textContent === '0' || viewCountSpan.textContent === '...' || viewCountSpan.textContent === '--' || viewCountSpan.textContent === '⏳') {
             // Only update if it's showing a placeholder
             viewCountSpan.textContent = '...';
         }
@@ -225,6 +246,8 @@ async function initializeListViewCounters() {
         
         // Update display
         viewCountSpan.textContent = viewCount;
+        
+        console.log(`Updated view count for ${postId} to ${viewCount}`);
     }
 }
 
