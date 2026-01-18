@@ -306,6 +306,7 @@ main {
     line-height: 1.3;
 }
 
+/* ===== Post Meta with View Counter ===== */
 .post-meta {
     color: var(--text-light);
     font-size: 0.9rem;
@@ -313,23 +314,70 @@ main {
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 1rem 0 2rem 0;
 }
 
-.post-meta-item {
-    display: flex;
+.post-meta > * {
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
-.post-date {
+.post-meta time,
+.post-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.post-views {
     font-weight: 500;
-}
-
-.post-reading-time {
+    color: var(--primary);
     background-color: var(--bg-light);
     padding: 0.25rem 0.75rem;
     border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.post-categories {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* ===== Post List Meta with View Counter ===== */
+.post-list-meta {
+    color: var(--text-light);
     font-size: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.post-list-meta > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.post-views-list {
+    font-weight: 500;
+    color: var(--text-light);
+    background-color: var(--bg-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+}
+
+.post-views-list .view-count {
+    color: var(--primary);
+    font-weight: 600;
 }
 
 /* ===== Tags & Categories ===== */
@@ -640,6 +688,13 @@ hr {
     .footer-content {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    
+    /* Responsive post meta */
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }
 
