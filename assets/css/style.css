@@ -225,192 +225,38 @@ main {
 }
 
 /* ===== Cards & Containers ===== */
-.page-article,
-.post,
-.post-list-item {
-    background-color: var(--bg);
-    padding: 2.5rem;
-    margin-bottom: 2.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: box-shadow 0.3s ease;
-}
+/* Post styles have been moved to assets/css/post.css */
 
-.page-article:hover,
-.post:hover,
-.post-list-item:hover {
-    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.08);
-}
-
-.page-header,
-.post-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border);
-}
-
-.page-title,
-.post-title {
-    margin: 0 0 0.75rem;
-    color: var(--primary);
-    line-height: 1.3;
-}
-
-/* ===== Post Meta with View Counter ===== */
-.post-meta {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 0.75rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin: 1rem 0 2rem 0;
-}
-
-.post-meta > * {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.post-meta time,
-.post-meta span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-/* ===== View Counters ===== */
-.post-views {
-    font-weight: 500;
-    color: var(--primary);
-    background-color: var(--bg-light);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.9rem;
-}
-
-.post-views-list {
-    font-weight: 500;
-    color: var(--text-light);
-    background-color: var(--bg-light);
-    padding: 0.2rem 0.6rem;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    font-size: 0.8rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.post-views-list .view-count {
-    color: var(--primary);
-    font-weight: 600;
-}
-
-.view-count {
-    color: var(--primary);
-    font-weight: 600;
-}
-
-/* ===== Post List Items ===== */
-.post-list-item {
-    background-color: var(--bg);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.post-list-item:hover {
-    border-color: var(--primary);
-    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.12);
-}
-
-.post-list-header {
-    margin-bottom: 1rem;
-}
-
-.post-list-header h3 {
-    margin: 0 0 0.75rem;
-    font-size: 1.375rem;
-    line-height: 1.4;
-}
-
-.post-list-header h3 a {
-    color: var(--primary);
-    text-decoration: none;
-    transition: all 0.2s;
-}
-
-.post-list-header h3 a:hover {
-    text-decoration: underline;
-    color: var(--accent);
-}
-
-.post-list-meta {
-    color: var(--text-light);
-    font-size: 0.85rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    margin: 0.5rem 0;
-}
-
-.post-list-meta > span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.post-list-excerpt {
-    color: var(--text-light);
-    line-height: 1.8;
-    margin: 1.25rem 0;
-    font-size: 0.95rem;
-}
-
-.post-list-link {
-    color: var(--primary);
-    text-decoration: none;
-}
-
-.post-list-link:hover {
-    text-decoration: underline;
-}
-
-.post-tags-list {
-    margin: 1rem 0;
-}
-
-.tag-small {
+/* ===== Tags & Categories ===== */
+.tag,
+.category {
     display: inline-block;
     background-color: var(--bg-light);
     color: var(--primary);
-    padding: 0.25rem 0.6rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    margin: 0.2rem 0.2rem 0.2rem 0;
-    border: 1px solid var(--primary);
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin: 0.35rem 0.35rem 0.35rem 0;
+    border: 1.5px solid var(--primary);
     transition: all 0.2s;
+    font-weight: 500;
 }
 
-.tag-small:hover {
+.tag:hover,
+.category:hover {
     background-color: var(--primary);
     color: white;
-    transform: translateY(-1px);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* ===== Horizontal Rules & Dividers ===== */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    margin: 2.5em 0;
+    border-radius: 1px;
 }
 
 /* ===== Categories & Tags Pages ===== */
