@@ -1,7 +1,14 @@
 /**
- * HellaleWeb Scripts
+ * HellaleWeb Scripts - Fixed View Counter Logic
  * Centralized JavaScript for the blog
  */
+
+// Configuration
+const CONFIG = {
+    namespace: 'hellaleweb',
+    sessionPrefix: 'viewed_post_',
+    apiBase: 'https://api.countapi.xyz'
+};
 
 // Initialize all scripts when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,112 +17,200 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Initialize view counters for individual posts
+ * Generate clean, unique post ID from URL
+ * @param {string} url - The post URL
+ * @returns {string} - Sanitized post ID
  */
-function initializePostViewCounter() {
-    const viewCountElement = document.getElementById('view-count');
-    if (!viewCountElement) {
-        console.warn('View count element not found');
-        return;
-    }
-    
-    // Create a unique ID for this post based on its path
-    const postPath = window.location.pathname.replace(/\//g, '-').replace(/^-|-$/g, '');
-    const namespace = 'hellaleweb';
-    const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${postPath}`;
-    
-    // Fetch and increment view count
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Update the view count display
-            viewCountElement.textContent = data.value || 0;
-        })
-        .catch(error => {
-            console.error('Error fetching view count:', error);
-            // Show 0 if there's an error
-            viewCountElement.textContent = '0';
-        });
+function getPostId(url) {
+    return url
+        .replace(/^\/|\/$/g, '')              // Remove leading/trailing slashes
+        .replace(/\.html?$/i, '')             // Remove .html extension
+        .replace(/[^a-zA-Z0-9]/g, '-')        // Replace special chars with hyphens
+        .replace(/-+/g, '-')                  // Replace multiple hyphens with single
+        .toLowerCase();                        // Normalize to lowercase
 }
 
 /**
- * Initialize view counters for post lists
+ * Check if post was already viewed in this session
+ * @param {string} postId - The post identifier
+ * @returns {boolean}
  */
-function initializeListViewCounters() {
-    const viewCountElements = document.querySelectorAll('.post-views-list');
+function wasViewedInSession(postId) {
+    return sessionStorage.getItem(CONFIG.sessionPrefix + postId) === 'true';
+}
+
+/**
+ * Mark post as viewed in this session
+ * @param {string} postId - The post identifier
+ */
+function markAsViewed(postId) {
+    sessionStorage.setItem(CONFIG.sessionPrefix + postId, 'true');
+}
+
+/**
+ * Fetch view count from CountAPI
+ * @param {string} postId - The post identifier
+ * @param {boolean} increment - Whether to increment the counter
+ * @returns {Promise<number>}
+ */
+async function fetchViewCount(postId, increment = false) {
+    const endpoint = increment ? 'hit' : 'get';
+    const url = `${CONFIG.apiBase}/${endpoint}/${CONFIG.namespace}/${postId}`;
+    
+    try {
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data.value || 0;
+    } catch (error) {
+        console.error('Error fetching view count:', error);
+        return 0;
+    }
+}
+
+/**
+ * Initialize view counter for individual post page
+ */
+async function initializePostViewCounter() {
+    const viewCountElement = document.getElementById('view-count');
+    if (!viewCountElement) {
+        return; // Not on a post page
+    }
+    
+    const postId = getPostId(window.location.pathname);
+    const alreadyViewed = wasViewedInSession(postId);
+    
+    console.log(`Post ID: ${postId}, Already viewed: ${alreadyViewed}`);
+    
+    // Show loading state
+    viewCountElement.textContent = '⏳';
+    
+    // Increment only if not viewed in this session
+    const viewCount = await fetchViewCount(postId, !alreadyViewed);
+    
+    // Update display
+    viewCountElement.textContent = viewCount;
+    
+    // Mark as viewed
+    if (!alreadyViewed) {
+        markAsViewed(postId);
+        console.log(`View count incremented for: ${postId}`);
+    } else {
+        console.log(`Already viewed in session: ${postId}`);
+    }
+}
+
+/**
+ * Initialize view counters for post list pages
+ */
+async function initializeListViewCounters() {
+    // Support multiple selectors for flexibility
+    const selectors = [
+        '.post-views-list',
+        '.post-preview-views',
+        '[data-view-counter]'
+    ];
+    
+    let viewCountElements = [];
+    selectors.forEach(selector => {
+        viewCountElements.push(...document.querySelectorAll(selector));
+    });
+    
     if (viewCountElements.length === 0) {
         console.log('No list view counters found');
         return;
     }
     
-    const namespace = 'hellaleweb';
+    console.log(`Found ${viewCountElements.length} list view counter(s)`);
     
-    viewCountElements.forEach((element, index) => {
-        const postUrl = element.getAttribute('data-post-url');
+    // Process each view counter
+    for (const element of viewCountElements) {
+        const postUrl = element.getAttribute('data-post-url') || 
+                       element.getAttribute('data-url');
+        
         if (!postUrl) {
-            console.warn(`Post URL not found for element ${index}`);
-            return;
+            console.warn('Post URL not found for element:', element);
+            continue;
         }
         
-        const postPath = postUrl.replace(/\//g, '-').replace(/^-|-$/g, '');
+        const postId = getPostId(postUrl);
+        const viewCountSpan = element.querySelector('.view-count') || element;
         
-        // Use 'get' instead of 'hit' to not increment on list pages
-        fetch(`https://api.countapi.xyz/get/${namespace}/${postPath}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const viewCountSpan = element.querySelector('.view-count');
-                if (viewCountSpan) {
-                    viewCountSpan.textContent = (data.value || 0);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching list view count:', error);
-                const viewCountSpan = element.querySelector('.view-count');
-                if (viewCountSpan) {
-                    viewCountSpan.textContent = '0';
-                }
-            });
-    });
+        // Show loading
+        viewCountSpan.textContent = '...';
+        
+        // Fetch count WITHOUT incrementing
+        const viewCount = await fetchViewCount(postId, false);
+        
+        // Update display
+        viewCountSpan.textContent = viewCount;
+    }
 }
 
 /**
  * Main initialization function
  */
-function initializeViewCounters() {
-    // Check if we're on a single post page
-    if (document.getElementById('view-count')) {
-        console.log('Initializing post view counter');
-        initializePostViewCounter();
-    }
+async function initializeViewCounters() {
+    console.log('Initializing view counters...');
     
-    // Check if we're on a list page with view counters
-    if (document.querySelectorAll('.post-views-list').length > 0) {
-        console.log('Initializing list view counters');
-        initializeListViewCounters();
+    try {
+        // Initialize post view counter (if on post page)
+        await initializePostViewCounter();
+        
+        // Initialize list view counters (if on list page)
+        await initializeListViewCounters();
+        
+        console.log('View counters initialized successfully');
+    } catch (error) {
+        console.error('Error initializing view counters:', error);
     }
-    
-    // Log completion
-    console.log('View counters initialized');
 }
 
 /**
- * Utility function to get post path from URL
- * @param {string} url - The post URL
- * @returns {string} - Formatted path for CountAPI
+ * Debug function to view all counters
+ * Call from browser console: viewCounterStats()
  */
-function getPostPath(url) {
-    return url.replace(/\//g, '-').replace(/^-|-$/g, '');
-}
+window.viewCounterStats = async function() {
+    try {
+        const response = await fetch(`${CONFIG.apiBase}/stats/${CONFIG.namespace}`);
+        const data = await response.json();
+        console.table(data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching stats:', error);
+    }
+};
+
+/**
+ * Debug function to reset a specific post counter
+ * Call from browser console: resetPostCounter('/posts/my-post/')
+ */
+window.resetPostCounter = function(postUrl) {
+    const postId = getPostId(postUrl);
+    console.log(`To reset counter for "${postId}", visit:`);
+    console.log(`${CONFIG.apiBase}/set/${CONFIG.namespace}/${postId}?value=0`);
+};
+
+/**
+ * Debug function to check current session views
+ * Call from browser console: getSessionViews()
+ */
+window.getSessionViews = function() {
+    const views = {};
+    for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key.startsWith(CONFIG.sessionPrefix)) {
+            const postId = key.replace(CONFIG.sessionPrefix, '');
+            views[postId] = sessionStorage.getItem(key);
+        }
+    }
+    console.table(views);
+    return views;
+};
 
 // Global error handling
 window.addEventListener('error', function(e) {
