@@ -1,14 +1,23 @@
 /**
- * HellaleWeb Scripts - Fixed View Counter Logic
- * Centralized JavaScript for the blog
+ * HellaleWeb Scripts - Enhanced View Counter Logic
+ * Centralized JavaScript for the blog with improved CountAPI integration
  */
 
 // Configuration
 const CONFIG = {
     namespace: 'hellaleweb',
     sessionPrefix: 'viewed_post_',
-    apiBase: 'https://api.countapi.xyz'
+    apiBase: 'https://api.countapi.xyz',
+    // Rate limiting: minimum time between requests (in ms)
+    minRequestInterval: 1000,
+    // Maximum retries for failed requests
+    maxRetries: 3,
+    // Retry delay in ms
+    retryDelay: 500
 };
+
+// Track recent requests to prevent spam
+const recentRequests = new Map();
 
 // Initialize all scripts when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -36,7 +45,13 @@ function getPostId(url) {
  * @returns {boolean}
  */
 function wasViewedInSession(postId) {
-    return sessionStorage.getItem(CONFIG.sessionPrefix + postId) === 'true';
+    try {
+        return sessionStorage.getItem(CONFIG.sessionPrefix + postId) === 'true';
+    } catch (e) {
+        // Handle cases where sessionStorage is not available
+        console.warn('Session storage not available:', e);
+        return false;
+    }
 }
 
 /**
@@ -44,16 +59,54 @@ function wasViewedInSession(postId) {
  * @param {string} postId - The post identifier
  */
 function markAsViewed(postId) {
-    sessionStorage.setItem(CONFIG.sessionPrefix + postId, 'true');
+    try {
+        sessionStorage.setItem(CONFIG.sessionPrefix + postId, 'true');
+    } catch (e) {
+        // Handle cases where sessionStorage is not available
+        console.warn('Could not save to session storage:', e);
+    }
 }
 
 /**
- * Fetch view count from CountAPI
+ * Check if request is too frequent (rate limiting)
+ * @param {string} postId - The post identifier
+ * @returns {boolean}
+ */
+function isRequestTooFrequent(postId) {
+    const now = Date.now();
+    const lastRequest = recentRequests.get(postId) || 0;
+    
+    if (now - lastRequest < CONFIG.minRequestInterval) {
+        return true;
+    }
+    
+    recentRequests.set(postId, now);
+    return false;
+}
+
+/**
+ * Delay function for retries
+ * @param {number} ms - Milliseconds to wait
+ * @returns {Promise}
+ */
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Fetch view count from CountAPI with retry logic
  * @param {string} postId - The post identifier
  * @param {boolean} increment - Whether to increment the counter
+ * @param {number} retryCount - Current retry attempt
  * @returns {Promise<number>}
  */
-async function fetchViewCount(postId, increment = false) {
+async function fetchViewCount(postId, increment = false, retryCount = 0) {
+    // Rate limiting check
+    if (isRequestTooFrequent(postId)) {
+        console.warn(`Rate limited for post: ${postId}`);
+        return 0;
+    }
+    
     const endpoint = increment ? 'hit' : 'get';
     const url = `${CONFIG.apiBase}/${endpoint}/${CONFIG.namespace}/${postId}`;
     
@@ -67,7 +120,16 @@ async function fetchViewCount(postId, increment = false) {
         const data = await response.json();
         return data.value || 0;
     } catch (error) {
-        console.error('Error fetching view count:', error);
+        console.error(`Error fetching view count for ${postId}:`, error);
+        
+        // Retry logic
+        if (retryCount < CONFIG.maxRetries) {
+            console.log(`Retrying (${retryCount + 1}/${CONFIG.maxRetries}) for ${postId}...`);
+            await delay(CONFIG.retryDelay * (retryCount + 1)); // Exponential backoff
+            return fetchViewCount(postId, increment, retryCount + 1);
+        }
+        
+        console.error(`Failed to fetch view count after ${CONFIG.maxRetries} retries for ${postId}`);
         return 0;
     }
 }
@@ -201,18 +263,68 @@ window.resetPostCounter = function(postUrl) {
  */
 window.getSessionViews = function() {
     const views = {};
-    for (let i = 0; i < sessionStorage.length; i++) {
-        const key = sessionStorage.key(i);
-        if (key.startsWith(CONFIG.sessionPrefix)) {
-            const postId = key.replace(CONFIG.sessionPrefix, '');
-            views[postId] = sessionStorage.getItem(key);
+    try {
+        for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key && key.startsWith(CONFIG.sessionPrefix)) {
+                const postId = key.replace(CONFIG.sessionPrefix, '');
+                views[postId] = sessionStorage.getItem(key);
+            }
         }
+    } catch (e) {
+        console.warn('Session storage not available:', e);
     }
     console.table(views);
     return views;
+};
+
+/**
+ * Force refresh a specific counter
+ * Call from browser console: forceRefreshCounter('/posts/my-post/')
+ */
+window.forceRefreshCounter = async function(postUrl) {
+    const postId = getPostId(postUrl);
+    const viewCount = await fetchViewCount(postId, false); // Don't increment
+    
+    // Update any elements showing this counter
+    const elements = document.querySelectorAll(`[data-post-url="${postUrl}"] .view-count, [data-url="${postUrl}"] .view-count`);
+    elements.forEach(el => {
+        el.textContent = viewCount;
+    });
+    
+    console.log(`Force refreshed counter for ${postId}: ${viewCount}`);
+    return viewCount;
+};
+
+/**
+ * Clear session storage for view tracking
+ * Call from browser console: clearViewSession()
+ */
+window.clearViewSession = function() {
+    try {
+        for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key && key.startsWith(CONFIG.sessionPrefix)) {
+                sessionStorage.removeItem(key);
+            }
+        }
+        console.log('Cleared view session storage');
+    } catch (e) {
+        console.warn('Could not clear session storage:', e);
+    }
 };
 
 // Global error handling
 window.addEventListener('error', function(e) {
     console.error('Script error:', e.error);
 });
+
+// Cleanup old entries from recentRequests periodically
+setInterval(() => {
+    const now = Date.now();
+    for (const [key, timestamp] of recentRequests.entries()) {
+        if (now - timestamp > CONFIG.minRequestInterval * 10) { // 10x interval
+            recentRequests.delete(key);
+        }
+    }
+}, CONFIG.minRequestInterval * 5); // Clean up every 5 intervals
