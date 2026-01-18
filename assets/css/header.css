@@ -1,0 +1,126 @@
+/* ===== Header Styles ===== */
+
+.site-header {
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.site-header-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+.site-title-wrapper {
+    margin-bottom: 1rem;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0 0 0.5rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s;
+}
+
+.site-title:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.site-description {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    margin: 0 0 1rem;
+    line-height: 1.5;
+}
+
+/* ===== Navigation ===== */
+.site-nav {
+    margin-top: 1rem;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.nav-item {
+    margin: 0;
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    color: var(--text);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: block;
+    font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: var(--bg-light);
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* ===== Responsive Header ===== */
+@media (max-width: 768px) {
+    .site-header-wrapper {
+        padding: 0 1rem;
+    }
+    
+    .site-title {
+        font-size: 1.3rem;
+    }
+    
+    .site-description {
+        font-size: 0.8rem;
+    }
+    
+    .nav-list {
+        gap: 0;
+        flex-wrap: wrap;
+    }
+    
+    .nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-header {
+        padding: 1rem 0;
+    }
+    
+    .site-header-wrapper {
+        padding: 0 0.75rem;
+    }
+    
+    .site-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-list {
+        gap: 0.1rem;
+    }
+    
+    .nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
