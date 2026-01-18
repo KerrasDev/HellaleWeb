@@ -167,14 +167,15 @@ async function initializePostViewCounter() {
 }
 
 /**
- * Initialize view counters for post list pages
+ * Initialize view counters for post list pages (including category pages)
  */
 async function initializeListViewCounters() {
     // Support multiple selectors for flexibility
     const selectors = [
         '.post-views-list',
         '.post-preview-views',
-        '[data-view-counter]'
+        '[data-view-counter]',
+        '.post-views'  // Also handle individual post view counters on list pages
     ];
     
     let viewCountElements = [];
@@ -191,8 +192,19 @@ async function initializeListViewCounters() {
     
     // Process each view counter
     for (const element of viewCountElements) {
-        const postUrl = element.getAttribute('data-post-url') || 
-                       element.getAttribute('data-url');
+        // Look for post URL in various attributes
+        let postUrl = element.getAttribute('data-post-url') || 
+                     element.getAttribute('data-url') ||
+                     element.closest('[data-post-url]')?.getAttribute('data-post-url') ||
+                     element.closest('[data-url]')?.getAttribute('data-url');
+        
+        // If still no URL found, check if it's inside an article with a link
+        if (!postUrl) {
+            const linkEl = element.closest('article')?.querySelector('a[href*="/"]');
+            if (linkEl) {
+                postUrl = linkEl.getAttribute('href');
+            }
+        }
         
         if (!postUrl) {
             console.warn('Post URL not found for element:', element);
@@ -203,7 +215,10 @@ async function initializeListViewCounters() {
         const viewCountSpan = element.querySelector('.view-count') || element;
         
         // Show loading
-        viewCountSpan.textContent = '...';
+        if (viewCountSpan.textContent === '0' || viewCountSpan.textContent === '...') {
+            // Only update if it's showing a placeholder
+            viewCountSpan.textContent = '...';
+        }
         
         // Fetch count WITHOUT incrementing
         const viewCount = await fetchViewCount(postId, false);

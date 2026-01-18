@@ -1,0 +1,63 @@
+---
+layout: default
+---
+
+<div class="archive-taxonomies-page">
+  <header class="archive-header">
+    <h1>
+      {% if page.type == "category" %}
+        📂 فئة: {{ page.title }}
+      {% elsif page.type == "tag" %}
+        🏷️ وسم: {{ page.title }}
+      {% endif %}
+    </h1>
+    
+    {% if page.description %}
+      <p class="archive-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="archive-content">
+    <div class="archive-posts-count">
+      {% if page.type == "category" %}
+        عدد المقالات في فئة "{{ page.title }}": {{ page.posts | size }}
+      {% elsif page.type == "tag" %}
+        عدد المقالات الموسومة بـ "{{ page.title }}": {{ page.posts | size }}
+      {% endif %}
+    </div>
+
+    <div class="archive-posts-list">
+      {% for post in page.posts %}
+        <article class="post-preview">
+          <h2 class="post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          
+          <div class="post-meta">
+            <span class="post-date">📅 {{ post.date | date: "%d %b %Y" }}</span>
+            
+            {% if post.author %}
+            <span class="post-author">✍️ {{ post.author }}</span>
+            {% endif %}
+            
+            <span class="post-views">👁️ ... مشاهدة</span>
+          </div>
+          
+          {% if post.excerpt %}
+          <div class="post-excerpt">
+            {{ post.excerpt | strip_html | truncatewords: 50 }}
+          </div>
+          {% endif %}
+          
+          <div class="read-more-container">
+            <a href="{{ post.url | relative_url }}" class="read-more">اقرأ المزيد ←</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="archive-navigation">
+    <a href="{{ '/categories/' | relative_url }}">← عرض جميع الفئات</a>
+  </div>
+</div>

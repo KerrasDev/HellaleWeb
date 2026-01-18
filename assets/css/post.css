@@ -357,6 +357,280 @@
     text-decoration: underline;
 }
 
+/* ===== Category Page Styles ===== */
+.category-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.category-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.category-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.category-description {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.posts-count {
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.posts-list {
+    margin-bottom: 2rem;
+}
+
+.post-preview {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.post-preview:hover {
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+}
+
+.post-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+}
+
+.post-title a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.post-excerpt {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.read-more {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.no-posts {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.no-posts .button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.no-posts .button:hover {
+    background: var(--accent);
+}
+
+.all-categories-link {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.all-categories-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.all-categories-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Categories Page Styles ===== */
+.categories-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.category-card {
+    background-color: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.category-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+    transform: translateY(-2px);
+}
+
+.category-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.category-card h3 a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.category-card h3 a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.category-count {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ===== Archive Taxonomies Page Styles ===== */
+.archive-taxonomies-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.archive-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.archive-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.archive-description {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.archive-content {
+    margin-bottom: 2rem;
+}
+
+.archive-posts-count {
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--bg-light);
+    border-radius: 6px;
+}
+
+.archive-posts-list {
+    margin-bottom: 2rem;
+}
+
+.archive-navigation {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.archive-navigation a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.archive-navigation a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Responsive Archive Styles ===== */
+@media (max-width: 768px) {
+    .archive-header h1 {
+        font-size: 2rem;
+    }
+    
+    .archive-taxonomies-page {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .archive-posts-count {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .archive-header h1 {
+        font-size: 1.75rem;
+    }
+}
+
 /* ===== Responsive Post Styles ===== */
 @media (max-width: 768px) {
     .post,
@@ -433,5 +707,66 @@
         align-items: flex-start;
         gap: 0.5rem;
         font-size: 0.85rem;
+    }
+}
+
+/* ===== Responsive Category Styles ===== */
+@media (max-width: 768px) {
+    .category-header h1 {
+        font-size: 2rem;
+    }
+    
+    .category-page {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .post-preview {
+        padding: 1.5rem;
+    }
+    
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .post-preview {
+        padding: 1rem;
+    }
+}
+
+/* ===== Responsive Categories Styles ===== */
+@media (max-width: 768px) {
+    .categories-page {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-card {
+        padding: 1rem;
     }
 }
